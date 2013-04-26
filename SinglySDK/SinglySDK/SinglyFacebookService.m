@@ -438,6 +438,11 @@
     {
         SinglyLog(@"Attempting to authorize via the installed Facebook app...");
 
+		// Post a notification that the authorization is being performed via an app
+		//
+		[[NSNotificationCenter defaultCenter] postNotificationName:@"com.singly.notifications.isAuthorizingViaAppNotification"
+															object:self];
+
         [SinglySession sharedSession].authorizingService = self;
         [[NSNotificationCenter defaultCenter] addObserver:self
                                                  selector:@selector(handleServiceAppliedNotification:)
