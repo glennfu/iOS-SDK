@@ -191,11 +191,47 @@
         return;
     }
 
-    NSArray *permissions = (scopes != nil) ? scopes : @[ @"email", @"user_location", @"user_birthday" ];
+	// need to split read/write permissions into two requests
+    __block NSArray *permissions = (scopes != nil) ? scopes : @[ @"email", @"user_location", @"user_birthday" ];
+	__block bool hasPublishStream = false;
+	
+	[permissions indexesOfObjectsPassingTest:^BOOL(id obj, NSUInteger idx, BOOL *stop) {
+		if ([(NSString *)obj isEqualToString:@"real_publish_stream"]) {
+			hasPublishStream = true;
+			NSMutableArray *clone = [permissions mutableCopy];
+			[clone replaceObjectAtIndex:idx withObject:@"publish_stream"];
+			permissions = clone;
+			return YES;
+		}
+		return NO;
+	}];
+	
+	if (hasPublishStream) {
+		hasPublishStream = false;
+	}
+	else {
+		[permissions indexesOfObjectsPassingTest:^BOOL(id obj, NSUInteger idx, BOOL *stop) {
+			if ([(NSString *)obj isEqualToString:@"publish_stream"]) {
+				hasPublishStream = true;
+				NSMutableArray *clone = [permissions mutableCopy];
+				[clone removeObjectAtIndex:idx];
+				permissions = clone;
+				return YES;
+			}
+			return NO;
+		}];
+		
+		// If publish_stream is the ONLY permission
+		if (permissions.count == 0 && hasPublishStream) {
+			hasPublishStream = false;
+			permissions = @[@"publish_stream"];
+		}
+	}
+	
     NSDictionary *options = @{
         @"ACFacebookAppIdKey": self.clientIdentifier,
         @"ACFacebookPermissionsKey": permissions,
-        @"ACFacebookAudienceKey": @"everyone"
+        @"ACFacebookAudienceKey": @"friends"
     };
 
     //
@@ -328,7 +364,15 @@
                                 //
                                 _isAuthorized = YES;
 
-                                [self serviceDidAuthorize];
+								if (hasPublishStream) {
+									NSMutableArray *newScopes = [@[@"real_publish_stream"] mutableCopy];
+									[newScopes addObjectsFromArray:permissions];
+									[self requestNativeAuthorizationFromViewController:viewController
+																			withScopes:newScopes];
+								}
+								else
+									[self serviceDidAuthorize];
+
                                 dispatch_semaphore_signal(authorizationSemaphore);
                                 return;
                             }
@@ -352,7 +396,15 @@
             //
             _isAuthorized = YES;
 
-            [self serviceDidAuthorize];
+			if (hasPublishStream) {
+				NSMutableArray *newScopes = [@[@"real_publish_stream"] mutableCopy];
+				[newScopes addObjectsFromArray:permissions];
+				[self requestNativeAuthorizationFromViewController:viewController
+														withScopes:newScopes];
+			}
+			else
+            	[self serviceDidAuthorize];
+
             dispatch_semaphore_signal(authorizationSemaphore);
         }
     }];
