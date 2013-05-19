@@ -629,6 +629,9 @@ static SinglySession *sharedInstance = nil;
     // Facebook
     if ([url.scheme hasPrefix:@"fb"])
     {
+		// Clicking the app link from within the Facebook app triggers this
+		if (!self.clientID || !self.clientSecret) return NO;
+
         SinglyFacebookService *service = (SinglyFacebookService *)authorizingService;
         NSString *accessToken = [url extractAccessToken];
 
