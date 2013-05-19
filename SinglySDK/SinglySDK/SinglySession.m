@@ -383,6 +383,10 @@ static SinglySession *sharedInstance = nil;
                error:(NSError **)error
 {
 
+    // Ensure that we have at least an access token.
+    // TODO Return a Singly error saying there is no access token...
+    if (!accessToken) return NO;
+
     // Prepare the Request Parameters
     NSMutableDictionary *requestParameters = [ @{
         @"client_id": self.clientID,

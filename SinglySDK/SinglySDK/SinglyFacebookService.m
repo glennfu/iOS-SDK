@@ -341,42 +341,62 @@
                     {
 
                         // TODO Check for errors...
-                        
-                        dispatch_async(dispatch_get_main_queue(), ^{
-                            NSError *applyError;
-                            [SinglySession.sharedSession applyService:self.serviceIdentifier
-                                                            withToken:account.credential.oauthToken
-                                                                error:&applyError];
+                        if (renewResult == ACAccountCredentialRenewResultFailed)
+                        {
+//                            NSLog(@"Failed Renewal");
+                        }
+                        else if (renewResult == ACAccountCredentialRenewResultRejected)
+                        {
+//                            NSLog(@"Renew rejected");
 
-                            if (applyError)
+                            //
+                            // If the user has removed the app, request authorization again.
+                            //
+                            if ([facebookError[@"error_subcode"] intValue] == 458)
                             {
-                                SinglyLog(@"Unhandled error: %@", applyError);
-                                [self serviceDidFailAuthorizationWithError:applyError];
-                                dispatch_semaphore_signal(authorizationSemaphore);
+                                [self requestNativeAuthorizationFromViewController:viewController
+                                                                        withScopes:scopes];
                                 return;
                             }
+                        }
+                        else if (renewResult == ACAccountCredentialRenewResultRenewed)
+                        {
+//                            NSLog(@"Renewed!");
+                        }
+                        NSError *applyError;
+                        [SinglySession.sharedSession applyService:self.serviceIdentifier
+                                                        withToken:account.credential.oauthToken
+                                                            error:&applyError];
 
-                            else
-                            {
+                        //
+                        // If there was an error, there really isn't anything more
+                        // that we can do. Inform the app that we cannot proceed.
+                        //
+                        if (applyError)
+                        {
+                            SinglyLog(@"Unhandled error: %@", applyError);
+                            [self serviceDidFailAuthorizationWithError:applyError];
+                            dispatch_semaphore_signal(authorizationSemaphore);
+                            return;
+                        }
 
-                                //
-                                // We are now authorized. Do not attempt any further authorizations.
-                                //
-                                _isAuthorized = YES;
+                        //
+                        // Otherwise, we are now authorized. Do not attempt any
+                        // further authorizations.
+                        //
+                        _isAuthorized = YES;
 
-								if (hasPublishStream) {
-									NSMutableArray *newScopes = [@[@"real_publish_stream"] mutableCopy];
-									[newScopes addObjectsFromArray:permissions];
-									[self requestNativeAuthorizationFromViewController:viewController
-																			withScopes:newScopes];
-								}
-								else
-									[self serviceDidAuthorize];
+						if (hasPublishStream) {
+							NSMutableArray *newScopes = [@[@"real_publish_stream"] mutableCopy];
+							[newScopes addObjectsFromArray:permissions];
+							[self requestNativeAuthorizationFromViewController:viewController
+																	withScopes:newScopes];
+						}
+						else
+							[self serviceDidAuthorize];
 
-                                dispatch_semaphore_signal(authorizationSemaphore);
-                                return;
-                            }
-                        });
+                        dispatch_semaphore_signal(authorizationSemaphore);
+                        return;
                     }];
                 }
 
