@@ -131,6 +131,9 @@
     [super viewDidDisappear:animated];
 
     [SinglyActivityIndicatorView dismissIndicator];
+
+	if ([self.webView isLoading])
+        [self.webView stopLoading];
 }
 
 #pragma mark - Web View Delegates
