@@ -140,4 +140,16 @@
 **/
 - (BOOL)isNativeAuthorizationConfigured;
 
+/*!
+ *
+ * If your app requires a URL scheme suffix, set it here before requesting
+ * authorization. When authenticating a user via the Facebook app, it will be
+ * passed as `local_client_id`.
+ *
+ * See [this article at the Facebook developer site](https://developers.facebook.com/docs/howtos/share-appid-across-multiple-apps-ios-sdk/)
+ * for more.
+ *
+**/
+@property (strong) NSString *urlSchemeSuffix;
+
 @end

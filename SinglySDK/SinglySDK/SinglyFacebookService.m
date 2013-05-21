@@ -320,6 +320,13 @@
             // Parse Original Response from Singly
             //
             NSData *responseData = [applyError.userInfo[kSinglyResponseKey] dataUsingEncoding:NSUTF8StringEncoding];
+            if (responseData == nil) {
+                SinglyLog(@"Unhandled error: Response from singly was nil");
+                NSError *responseError = [NSError errorWithDomain:@"com.singly.sdk" code:400 userInfo:@{NSLocalizedDescriptionKey:@"Unable to connect to server. Please try again."}];
+                [self serviceDidFailAuthorizationWithError:responseError];
+                dispatch_semaphore_signal(authorizationSemaphore);
+                return;
+            }
             id responseObject = [NSJSONSerialization JSONObjectWithData:responseData options:kNilOptions error:nil];
 
             //
@@ -438,14 +445,19 @@
 - (BOOL)requestApplicationAuthorization:(NSArray *)scopes
 {
     NSArray *permissions = (scopes != nil) ? scopes : @[ @"email", @"user_location", @"user_birthday" ];
-    NSDictionary *params = @{
+    NSMutableDictionary *params = [@{
         @"client_id": self.clientIdentifier,
         @"type": @"user_agent",
         @"redirect_uri": @"fbconnect://success",
         @"display": @"touch",
         @"sdk": @"ios",
         @"scope": [permissions componentsJoinedByString:@","]
-    };
+    } mutableCopy];
+    
+    if (self.urlSchemeSuffix)
+    {
+        params[@"local_client_id"] = self.urlSchemeSuffix;
+    }
 
     NSString *facebookAppURL = [NSString stringWithFormat:@"fbauth://authorize?%@", [params queryStringValue]];
     BOOL isAppInstalled = [[UIApplication sharedApplication] openURL:[NSURL URLWithString:facebookAppURL]];

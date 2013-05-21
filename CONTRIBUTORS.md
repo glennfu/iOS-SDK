@@ -8,3 +8,6 @@ The following individuals have contributed to this project:
 * Chris Burkhardt
 * Beau Gunderson
 * Zakk Hoyt
+* Devin Chalmers
+* Sean Levin
+* Glenn Sidney
