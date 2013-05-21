@@ -460,7 +460,7 @@
     }
 
     NSString *facebookAppURL = [NSString stringWithFormat:@"fbauth://authorize?%@", [params queryStringValue]];
-    BOOL isAppInstalled = [[UIApplication sharedApplication] openURL:[NSURL URLWithString:facebookAppURL]];
+    BOOL isAppInstalled = [[UIApplication sharedApplication] canOpenURL:[NSURL URLWithString:facebookAppURL]];
 
     if (!isAppInstalled)
     {
@@ -480,6 +480,8 @@
                                                  selector:@selector(handleServiceAppliedNotification:)
                                                      name:kSinglyServiceAppliedNotification
                                                    object:nil];
+		
+		[[UIApplication sharedApplication] openURL:[NSURL URLWithString:facebookAppURL]];
     }
 
     return isAppInstalled;
