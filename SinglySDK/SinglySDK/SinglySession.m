@@ -401,7 +401,10 @@ static SinglySession *sharedInstance = nil;
     // Set Account ID (if available)
     if (self.accountID)
         requestParameters[@"account"] = self.accountID;
-
+	
+	// If our account ID has expired, don't explode, just give us back the new one.
+	requestParameters[@"verifyAccount"] = @"false";
+	
     // Prepare the Request
     SinglyRequest *request = [SinglyRequest requestWithEndpoint:[NSString stringWithFormat:@"auth/%@/apply", serviceIdentifier]];
     request.parameters = requestParameters;
