@@ -327,17 +327,4 @@
 
 }
 
-#pragma mark - Notification Handlers
-
-- (void)handleServiceAppliedNotification:(NSNotification *)notification
-{
-    [[NSNotificationCenter defaultCenter] removeObserver:self
-                                                    name:kSinglyServiceAppliedNotification object:nil];
-
-    if (self.delegate && [self.delegate respondsToSelector:@selector(singlyServiceDidAuthorize:)])
-        [self.delegate singlyServiceDidAuthorize:self];
-
-    SinglySession.sharedSession.authorizingService = nil;
-}
-
 @end
