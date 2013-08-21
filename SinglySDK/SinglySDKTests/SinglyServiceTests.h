@@ -31,4 +31,6 @@
 
 @interface SinglyServiceTests : SenTestCase
 
+@property SinglyService *testService;
+
 @end

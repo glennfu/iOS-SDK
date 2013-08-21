@@ -31,7 +31,6 @@
 
 @property (nonatomic, strong) IBOutlet UITableViewCell *friendPickerCell;
 
-- (void)syncContacts;
 - (void)resetApplicationState;
 
 @end

@@ -29,7 +29,6 @@
 
 #import <SinglySDK/SinglyConstants.h>
 #import <SinglySDK/SinglyFacebookService.h>
-#import <SinglySDK/SinglyFriendPickerViewController.h>
 #import <SinglySDK/SinglyLoginPickerViewController.h>
 #import <SinglySDK/SinglyLoginViewController.h>
 #import <SinglySDK/SinglyRequest.h>

@@ -96,8 +96,16 @@
     ACAccountStore *accountStore = [[ACAccountStore alloc] init];
     ACAccountType *testAccountType = [accountStore accountTypeWithAccountTypeIdentifier:@"com.apple.facebook"];
     ACAccountCredential *testCredentials = [[ACAccountCredential alloc] initWithOAuth2Token:@"test-access-token" refreshToken:@"test-refresh-token" expiryDate:[NSDate dateWithTimeIntervalSinceNow:86400]];
+//    [testCredentials setValue:@"test-password" forKey:@"password"];
+//    [testCredentials setValue:@"test-password" forKey:@"_password"];
+//    [testCredentials performSelector:@selector(setPassword:) withObject:@"test-password"];
+//    ACAccountCredential *testCredentials = [[ACAccountCredential alloc] performSelector:@selector(initWithPassword:) withObject:@"Foo"];
     ACAccount *mockAccount = [[ACAccount alloc] initWithAccountType:testAccountType];
     mockAccount.credential = testCredentials;
+//    mockAccount.username = @"test-username";
+//    [mockAccount setValue:@"test-password" forKey:@"password"];
+//    [mockAccount setValue:@"Facebook" forKey:@"accountDescription"];
+//    [mockAccount setValue:@"test-password" forKey:@"_password"];
     return mockAccount;
 }
 
@@ -694,6 +702,79 @@
         grantBlock(YES, nil);
     }] requestAccessToAccountsWithType:[OCMArg any] options:[OCMArg any] completion:[OCMArg any]];
     [self.testService setValue:mockAccountStore forKey:@"_accountStore"];
+
+    //
+    // Set a custom completion handler on the service instance so that we can
+    // ensure that it was called.
+    //
+    SinglyServiceAuthorizationCompletionHandler testCompletionHandler = ^(BOOL isSuccessful, NSError *error) {
+        STAssertTrue(isSuccessful, @"The isSuccessful parameter should be true.");
+        isComplete = YES;
+    };
+    [self.testService setValue:testCompletionHandler forKey:@"_completionHandler"];
+
+    //
+    // Perform the test by requesting integrated authorization.
+    //
+    [self.testService requestNativeAuthorizationFromViewController:testViewController
+                                                        withScopes:nil];
+
+    //
+    // Verify that the completion handler was called by waiting for the
+    // isComplete variable value to be set to true.
+    //
+    [self waitForCompletion:^{ return isComplete; }];
+}
+
+//
+//
+//
+- (void)testShouldAttemptToRenewCredentials
+{
+    __block BOOL isComplete = NO;
+    UIViewController *testViewController = [[UIViewController alloc] init];
+
+    //
+    // Create a mock for the account store.
+    //
+    id mockAccountStore = [self mockAccountStoreWithAccounts:@[ [self mockAccount] ]];
+    [self.testService setValue:mockAccountStore forKey:@"_accountStore"];
+
+    //
+    // Mock the account store to return an error when attempting to apply an
+    // access token that is no longer valid.
+    //
+    [[[mockAccountStore stub] andDo:^(NSInvocation *invocation) {
+
+        //
+        // Can the response from applying the passed token to the Singly API.
+        //
+        NSData *responseData = [self dataForFixture:@"auth-facebook-oauth-error-app-not-installed"];
+        [SinglyTestURLProtocol setCannedResponseData:responseData];
+        
+        void (^grantBlock)(BOOL granted, NSError *error) = nil;
+        [invocation getArgument:&grantBlock atIndex:4];
+        grantBlock(YES, nil);
+
+    }] requestAccessToAccountsWithType:[OCMArg any] options:[OCMArg any] completion:[OCMArg any]];
+
+    //
+    // Mock the account store to return a successful response to a credentials
+    // renewal request.
+    //
+    [[[mockAccountStore stub] andDo:^(NSInvocation *invocation) {
+
+        //
+        // Next, we need to can a successful response to the apply.
+        //
+        NSData *responseData = [self dataForFixture:@"auth-facebook-apply"];
+        [SinglyTestURLProtocol setCannedResponseData:responseData];
+
+        void (^renewBlock)(ACAccountCredentialRenewResult renewResult, NSError *error) = nil;
+        [invocation getArgument:&renewBlock atIndex:3];
+        renewBlock(ACAccountCredentialRenewResultRenewed, nil);
+
+    }] renewCredentialsForAccount:[OCMArg any] completion:[OCMArg any]];
 
     //
     // Set a custom completion handler on the service instance so that we can

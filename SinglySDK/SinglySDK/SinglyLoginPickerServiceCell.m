@@ -104,15 +104,19 @@
         {
 
             // Load Image
-            NSString *imageLocation = serviceInfoDictionary[@"icons"][2][@"source"];
-            if (imageLocation)
+            NSArray *serviceIcons = serviceInfoDictionary[@"icons"];
+            if ([serviceIcons objectAtIndex:2])
             {
-                NSURL *imageURL = [NSURL URLWithString:imageLocation];
-                NSURLRequest *imageRequest = [NSURLRequest requestWithURL:imageURL];
-                self.receivedData = [NSMutableData data];
-                self.imageConnection = [[NSURLConnection alloc] initWithRequest:imageRequest delegate:self startImmediately:NO];
-                [self.imageConnection scheduleInRunLoop:[NSRunLoop currentRunLoop] forMode:NSRunLoopCommonModes];
-                [self.imageConnection start];
+                NSString *imageLocation = serviceIcons[2][@"source"];
+                if (imageLocation)
+                {
+                    NSURL *imageURL = [NSURL URLWithString:imageLocation];
+                    NSURLRequest *imageRequest = [NSURLRequest requestWithURL:imageURL];
+                    self.receivedData = [NSMutableData data];
+                    self.imageConnection = [[NSURLConnection alloc] initWithRequest:imageRequest delegate:self startImmediately:NO];
+                    [self.imageConnection scheduleInRunLoop:[NSRunLoop currentRunLoop] forMode:NSRunLoopCommonModes];
+                    [self.imageConnection start];
+                }
             }
             
         }

@@ -1,0 +1,11 @@
+{
+    "error": "Service responded with status code '400'.",
+    "originalError": {
+        "error": {
+            "message": "Error validating access token: User 12345678 has not authorized application 123456789012345.",
+            "type": "OAuthException",
+            "code": 190,
+            "error_subcode": 458
+        }
+    }
+}

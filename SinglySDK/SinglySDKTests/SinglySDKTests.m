@@ -45,9 +45,4 @@
     [super tearDown];
 }
 
-//- (void)testExample
-//{
-//    STFail(@"Unit tests are not implemented yet in SinglySDKTests");
-//}
-
 @end

@@ -38,7 +38,6 @@
 		D098EB8C1626181900B2626C /* Background@2x.png in Resources */ = {isa = PBXBuildFile; fileRef = D098EB8A1626181900B2626C /* Background@2x.png */; };
 		D098EB8D1626181900B2626C /* Background.png in Resources */ = {isa = PBXBuildFile; fileRef = D098EB8B1626181900B2626C /* Background.png */; };
 		D09B2DD1167FD87100C168C6 /* AddressBookUI.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = D09B2DCE167FD85200C168C6 /* AddressBookUI.framework */; };
-		D0D80B961628B301006F7B90 /* SinglyPhotosViewController.m in Sources */ = {isa = PBXBuildFile; fileRef = D0D80B951628B301006F7B90 /* SinglyPhotosViewController.m */; };
 		D0D96E3616C5580900283404 /* Twitter.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = D0D96E3516C5580900283404 /* Twitter.framework */; };
 		D0E2C73E16375B7C00AAD565 /* SinglySDK.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = D0E2C73D16375B7C00AAD565 /* SinglySDK.framework */; };
 		D0E2C74016375BF300AAD565 /* SinglySDK.bundle in Resources */ = {isa = PBXBuildFile; fileRef = D0E2C73F16375BF300AAD565 /* SinglySDK.bundle */; };
@@ -81,10 +80,10 @@
 		D098EB881626157000B2626C /* Icon-144.png */ = {isa = PBXFileReference; lastKnownFileType = image.png; name = "Icon-144.png"; path = "../Icon-144.png"; sourceTree = "<group>"; };
 		D098EB8A1626181900B2626C /* Background@2x.png */ = {isa = PBXFileReference; lastKnownFileType = image.png; path = "Background@2x.png"; sourceTree = "<group>"; };
 		D098EB8B1626181900B2626C /* Background.png */ = {isa = PBXFileReference; lastKnownFileType = image.png; path = Background.png; sourceTree = "<group>"; };
+		D09A2D5117A7FF570026002A /* TestFlight+AsyncLogging.h */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.c.h; path = "TestFlight+AsyncLogging.h"; sourceTree = "<group>"; };
+		D09A2D5217A7FF570026002A /* TestFlight+ManualSessions.h */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.c.h; path = "TestFlight+ManualSessions.h"; sourceTree = "<group>"; };
 		D09B2DCE167FD85200C168C6 /* AddressBookUI.framework */ = {isa = PBXFileReference; lastKnownFileType = wrapper.framework; name = AddressBookUI.framework; path = System/Library/Frameworks/AddressBookUI.framework; sourceTree = SDKROOT; };
 		D0D80B911628A6F7006F7B90 /* SinglyConfiguration.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = SinglyConfiguration.h; sourceTree = "<group>"; };
-		D0D80B941628B301006F7B90 /* SinglyPhotosViewController.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = SinglyPhotosViewController.h; sourceTree = "<group>"; };
-		D0D80B951628B301006F7B90 /* SinglyPhotosViewController.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = SinglyPhotosViewController.m; sourceTree = "<group>"; };
 		D0D96E3516C5580900283404 /* Twitter.framework */ = {isa = PBXFileReference; lastKnownFileType = wrapper.framework; name = Twitter.framework; path = System/Library/Frameworks/Twitter.framework; sourceTree = SDKROOT; };
 		D0E2C73D16375B7C00AAD565 /* SinglySDK.framework */ = {isa = PBXFileReference; lastKnownFileType = wrapper.framework; name = SinglySDK.framework; path = "../../../../../../../../Projects/Singly/Source/iOS-SDK/SinglySDK/build/Release-iphoneos/SinglySDK.framework"; sourceTree = BUILT_PRODUCTS_DIR; };
 		D0E2C73F16375BF300AAD565 /* SinglySDK.bundle */ = {isa = PBXFileReference; explicitFileType = wrapper.cfbundle; path = SinglySDK.bundle; sourceTree = BUILT_PRODUCTS_DIR; };
@@ -169,8 +168,6 @@
 				827E3EE115E5528200D30D96 /* SinglyAppDelegate.m */,
 				D0075FEB161A215400F763A1 /* SinglyMainViewController.h */,
 				D0075FEC161A215400F763A1 /* SinglyMainViewController.m */,
-				D0D80B941628B301006F7B90 /* SinglyPhotosViewController.h */,
-				D0D80B951628B301006F7B90 /* SinglyPhotosViewController.m */,
 				D0D80B911628A6F7006F7B90 /* SinglyConfiguration.h */,
 				827E3EE315E5528200D30D96 /* MainStoryboard_iPhone.storyboard */,
 				827E3EE615E5528200D30D96 /* MainStoryboard_iPad.storyboard */,
@@ -207,6 +204,8 @@
 				D03BE929161CA29D009D0341 /* README.md */,
 				D03BE92A161CA29D009D0341 /* release_notes.md */,
 				D03BE92B161CA29D009D0341 /* TestFlight.h */,
+				D09A2D5117A7FF570026002A /* TestFlight+AsyncLogging.h */,
+				D09A2D5217A7FF570026002A /* TestFlight+ManualSessions.h */,
 			);
 			name = "TestFlight SDK";
 			path = TestFlightSDK;
@@ -257,8 +256,13 @@
 			isa = PBXProject;
 			attributes = {
 				CLASSPREFIX = Singly;
-				LastUpgradeCheck = 0460;
+				LastUpgradeCheck = 0500;
 				ORGANIZATIONNAME = "Singly, Inc";
+				TargetAttributes = {
+					827E3ECC15E5528200D30D96 = {
+						DevelopmentTeam = A62SQJDVJQ;
+					};
+				};
 			};
 			buildConfigurationList = 827E3EC715E5528200D30D96 /* Build configuration list for PBXProject "SinglySDK Example" */;
 			compatibilityVersion = "Xcode 3.2";
@@ -313,7 +317,6 @@
 				827E3EDE15E5528200D30D96 /* main.m in Sources */,
 				827E3EE215E5528200D30D96 /* SinglyAppDelegate.m in Sources */,
 				D0075FED161A215400F763A1 /* SinglyMainViewController.m in Sources */,
-				D0D80B961628B301006F7B90 /* SinglyPhotosViewController.m in Sources */,
 			);
 			runOnlyForDeploymentPostprocessing = 0;
 		};
@@ -351,10 +354,11 @@
 			isa = XCBuildConfiguration;
 			buildSettings = {
 				ALWAYS_SEARCH_USER_PATHS = NO;
-				ARCHS = "$(ARCHS_STANDARD_32_BIT)";
 				CLANG_CXX_LANGUAGE_STANDARD = "gnu++0x";
 				CLANG_ENABLE_OBJC_ARC = YES;
+				CLANG_WARN_BOOL_CONVERSION = YES;
 				CLANG_WARN_CONSTANT_CONVERSION = YES;
+				CLANG_WARN_EMPTY_BODY = YES;
 				CLANG_WARN_ENUM_CONVERSION = YES;
 				CLANG_WARN_INT_CONVERSION = YES;
 				CLANG_WARN__DUPLICATE_METHOD_MATCH = YES;
@@ -367,9 +371,12 @@
 				GCC_SYMBOLS_PRIVATE_EXTERN = NO;
 				GCC_VERSION = com.apple.compilers.llvm.clang.1_0;
 				GCC_WARN_ABOUT_RETURN_TYPE = YES;
+				GCC_WARN_UNDECLARED_SELECTOR = YES;
 				GCC_WARN_UNINITIALIZED_AUTOS = YES;
+				GCC_WARN_UNUSED_FUNCTION = YES;
 				GCC_WARN_UNUSED_VARIABLE = YES;
 				IPHONEOS_DEPLOYMENT_TARGET = 5.0;
+				ONLY_ACTIVE_ARCH = YES;
 				SDKROOT = iphoneos;
 				TARGETED_DEVICE_FAMILY = "1,2";
 			};
@@ -379,10 +386,11 @@
 			isa = XCBuildConfiguration;
 			buildSettings = {
 				ALWAYS_SEARCH_USER_PATHS = NO;
-				ARCHS = "$(ARCHS_STANDARD_32_BIT)";
 				CLANG_CXX_LANGUAGE_STANDARD = "gnu++0x";
 				CLANG_ENABLE_OBJC_ARC = YES;
+				CLANG_WARN_BOOL_CONVERSION = YES;
 				CLANG_WARN_CONSTANT_CONVERSION = YES;
+				CLANG_WARN_EMPTY_BODY = YES;
 				CLANG_WARN_ENUM_CONVERSION = YES;
 				CLANG_WARN_INT_CONVERSION = YES;
 				CLANG_WARN__DUPLICATE_METHOD_MATCH = YES;
@@ -391,7 +399,9 @@
 				GCC_C_LANGUAGE_STANDARD = gnu99;
 				GCC_VERSION = com.apple.compilers.llvm.clang.1_0;
 				GCC_WARN_ABOUT_RETURN_TYPE = YES;
+				GCC_WARN_UNDECLARED_SELECTOR = YES;
 				GCC_WARN_UNINITIALIZED_AUTOS = YES;
+				GCC_WARN_UNUSED_FUNCTION = YES;
 				GCC_WARN_UNUSED_VARIABLE = YES;
 				IPHONEOS_DEPLOYMENT_TARGET = 5.0;
 				OTHER_CFLAGS = "-DNS_BLOCK_ASSERTIONS=1";
@@ -404,6 +414,8 @@
 		827E3EEF15E5528200D30D96 /* Debug */ = {
 			isa = XCBuildConfiguration;
 			buildSettings = {
+				CODE_SIGN_IDENTITY = "iPhone Developer";
+				"CODE_SIGN_IDENTITY[sdk=iphoneos*]" = "iPhone Developer";
 				GCC_PRECOMPILE_PREFIX_HEADER = YES;
 				GCC_PREFIX_HEADER = "SinglySDK Example/SinglySDK Example-Prefix.pch";
 				INFOPLIST_FILE = "SinglySDK Example/SinglySDK Example-Info.plist";
@@ -413,6 +425,7 @@
 					"\"$(SRCROOT)/Libraries/TestFlightSDK\"",
 				);
 				PRODUCT_NAME = "$(TARGET_NAME)";
+				PROVISIONING_PROFILE = "";
 				WRAPPER_EXTENSION = app;
 			};
 			name = Debug;
@@ -420,6 +433,8 @@
 		827E3EF015E5528200D30D96 /* Release */ = {
 			isa = XCBuildConfiguration;
 			buildSettings = {
+				CODE_SIGN_IDENTITY = "iPhone Developer";
+				"CODE_SIGN_IDENTITY[sdk=iphoneos*]" = "iPhone Developer";
 				GCC_PRECOMPILE_PREFIX_HEADER = YES;
 				GCC_PREFIX_HEADER = "SinglySDK Example/SinglySDK Example-Prefix.pch";
 				INFOPLIST_FILE = "SinglySDK Example/SinglySDK Example-Info.plist";
@@ -429,6 +444,7 @@
 					"\"$(SRCROOT)/Libraries/TestFlightSDK\"",
 				);
 				PRODUCT_NAME = "$(TARGET_NAME)";
+				PROVISIONING_PROFILE = "";
 				WRAPPER_EXTENSION = app;
 			};
 			name = Release;
@@ -437,10 +453,11 @@
 			isa = XCBuildConfiguration;
 			buildSettings = {
 				ALWAYS_SEARCH_USER_PATHS = NO;
-				ARCHS = "$(ARCHS_STANDARD_32_BIT)";
 				CLANG_CXX_LANGUAGE_STANDARD = "gnu++0x";
 				CLANG_ENABLE_OBJC_ARC = YES;
+				CLANG_WARN_BOOL_CONVERSION = YES;
 				CLANG_WARN_CONSTANT_CONVERSION = YES;
+				CLANG_WARN_EMPTY_BODY = YES;
 				CLANG_WARN_ENUM_CONVERSION = YES;
 				CLANG_WARN_INT_CONVERSION = YES;
 				CLANG_WARN__DUPLICATE_METHOD_MATCH = YES;
@@ -450,7 +467,9 @@
 				GCC_PREPROCESSOR_DEFINITIONS = "DEBUG=1";
 				GCC_VERSION = com.apple.compilers.llvm.clang.1_0;
 				GCC_WARN_ABOUT_RETURN_TYPE = YES;
+				GCC_WARN_UNDECLARED_SELECTOR = YES;
 				GCC_WARN_UNINITIALIZED_AUTOS = YES;
+				GCC_WARN_UNUSED_FUNCTION = YES;
 				GCC_WARN_UNUSED_VARIABLE = YES;
 				IPHONEOS_DEPLOYMENT_TARGET = 5.0;
 				OTHER_CFLAGS = "-DNS_BLOCK_ASSERTIONS=1";
@@ -463,6 +482,8 @@
 		D06D8DCD1652D7CE00E8750C /* Example */ = {
 			isa = XCBuildConfiguration;
 			buildSettings = {
+				CODE_SIGN_IDENTITY = "iPhone Developer";
+				"CODE_SIGN_IDENTITY[sdk=iphoneos*]" = "iPhone Developer";
 				GCC_PRECOMPILE_PREFIX_HEADER = YES;
 				GCC_PREFIX_HEADER = "SinglySDK Example/SinglySDK Example-Prefix.pch";
 				INFOPLIST_FILE = "SinglySDK Example/SinglySDK Example-Info.plist";
@@ -472,6 +493,7 @@
 					"\"$(SRCROOT)/Libraries/TestFlightSDK\"",
 				);
 				PRODUCT_NAME = "$(TARGET_NAME)";
+				PROVISIONING_PROFILE = "";
 				WRAPPER_EXTENSION = app;
 			};
 			name = Example;

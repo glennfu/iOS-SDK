@@ -41,9 +41,6 @@
     // Initialize TestFlight
     #ifdef TESTFLIGHT_TOKEN
         [TestFlight takeOff:TESTFLIGHT_TOKEN];
-        #pragma clang diagnostic ignored "-Wdeprecated-declarations"
-            [TestFlight setDeviceIdentifier:[[UIDevice currentDevice] uniqueIdentifier]];
-        #pragma clang diagnostic warning "-Wdeprecated-declarations"
     #endif
 
     // Confirm that the Client ID and Client Secret have been configured

@@ -31,4 +31,6 @@
 
 @interface SinglyTwitterServiceTests : SenTestCase
 
+@property SinglyTwitterService *testService;
+
 @end

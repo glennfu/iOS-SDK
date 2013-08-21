@@ -136,29 +136,6 @@ SinglyRequest *request = [SinglyRequest requestWithEndpoint:@"profiles"];
 }];
 ```
 
-### Syncing Device Contacts with the Singly API
-
-The iOS SDK allows you to sync the users' device contacts with the Singly API
-as friends. Along with adding these contacts as friends returned by the friends
-endpoint, Singly will also allow you to see which of your peers are already
-using the app. For more details, see the
-[Peers documentation](https://singly.com/docs/friends#Peers).
-
-```objective-c
-// Observe for Contacts Sync Notifications
-[NSNotificationCenter.defaultCenter addObserverForName:kSinglyContactsSyncedNotification
-                                                object:nil
-                                                queue:nil
-                                                usingBlock:^(NSNotification *notification) {
-
-    NSArray *syncedContacts = (NSArray *)notification.userInfo;
-    NSLog(@"Synced Contacts: %@", syncedContacts);
-}];
-
-// Sync Contacts
-[SinglySession.sharedSession syncDeviceContacts];
-```
-
 ## Building the Example App
 
 Singly SDK ships with an example app that illustrates all of the capabilities
@@ -252,14 +229,12 @@ issues and look into possible bugs with our service and SDKs.
     to [file an issue](https://github.com/singly/ios-sdk/issues), providing as
     much information about the issue as possible.
 
-  * **Join us on HipChat.**
-    For questions or just to say hi and show off what you're building, feel
-    free to join us on our [Support HipChat](https://support.singly.com) and
-    have a word with us!
+  * **File a support ticket.**
+    For questions or help implementing the SDK into your app, feel
+    free to [contact support](https://singly.com/docs/contact/).
 
 You may also contact the maintainer of the Singly iOS SDK, Justin Mecham, at
-[opie@singly.com](mailto:opie@singly.com) or `@opie` in the
-[Support HipChat](https://support.singly.com).
+[opie@singly.com](mailto:opie@singly.com).
 
 ## License
 

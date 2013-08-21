@@ -448,31 +448,4 @@
     [self waitForCompletion:^{ return isComplete; }];
 }
 
-#pragma mark - Device Contacts
-
-- (void)testShouldSyncDeviceContacts
-{
-    NSData *responseData = [self dataForFixture:@"friends-ios"];
-    [SinglyTestURLProtocol setCannedResponseData:responseData];
-
-    BOOL isSuccessful = [SinglySession.sharedSession syncDeviceContacts:nil];
-
-    STAssertTrue(isSuccessful, @"Return value for syncDeviceContacts: should be true.");
-}
-
-- (void)testShouldSyncDeviceContactsWithCompletion
-{
-    __block BOOL isComplete = NO;
-
-    NSData *responseData = [self dataForFixture:@"friends-ios"];
-    [SinglyTestURLProtocol setCannedResponseData:responseData];
-
-    [SinglySession.sharedSession syncDeviceContactsWithCompletion:^(BOOL isSuccessful, NSError *error) {
-        STAssertTrue(isSuccessful, @"Parameter value 'isSuccessful' should be true.");
-        isComplete = YES;
-    }];
-
-    [self waitForCompletion:^{ return isComplete; }];
-}
-
 @end
