@@ -252,9 +252,8 @@
         {
             SinglyLog(@"Access to the Facebook account on the device was denied.");
 
-            // If there was an error object, it means that the user denied
-            // access, so we should be in an aborted state...
-            if (accessError)
+            // Check to see if the user explicitly denied access to the app.
+            if (accessError && accessError.code == ACErrorPermissionDenied)
             {
                 _isAborted = YES;
                 [self serviceDidFailAuthorizationWithError:accessError];

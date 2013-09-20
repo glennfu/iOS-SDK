@@ -3,6 +3,8 @@
 
 ## 1.3.0
 
+* Fixed an issue with native Facebook authorization on iOS 7.
+
 * Removed support for the Friends API and syncing of contacts to the Singly
   service.
 
