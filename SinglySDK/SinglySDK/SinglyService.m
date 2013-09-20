@@ -127,6 +127,9 @@
 - (void)requestAuthorizationViaSinglyFromViewController:(UIViewController *)viewController
                                              withScopes:(NSArray *)scopes
 {
+	[[NSNotificationCenter defaultCenter] postNotificationName:@"com.singly.notifications.isAuthorizingViaViewControllerNotification"
+														object:self];
+
     // Initialize the Login View Controller
     SinglyLoginViewController *loginViewController = [[SinglyLoginViewController alloc] initWithServiceIdentifier:self.serviceIdentifier];
     loginViewController.scopes = scopes;
