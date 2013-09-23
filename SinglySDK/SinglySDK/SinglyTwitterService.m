@@ -69,7 +69,7 @@
     ACAccountType *accountType = [self.accountStore accountTypeWithAccountTypeIdentifier:ACAccountTypeIdentifierTwitter];
     NSArray *accounts = [self.accountStore accountsWithAccountType:accountType];
 
-    if ([accounts respondsToSelector:@selector(count)])
+    if ([accounts respondsToSelector:@selector(count)] && [accounts count] > 0)
         isConfigured = YES;
 
     if (!isConfigured)
@@ -140,8 +140,10 @@
     [[NSNotificationCenter defaultCenter] postNotificationName:kSinglyServiceIsAuthorizingNotification
                                                         object:self];
 
+
     [self.accountStore requestAccessToAccountsWithType:accountType
-                                 withCompletionHandler:^(BOOL granted, NSError *accessError)
+                                               options:nil
+                                            completion:^(BOOL granted, NSError *accessError)
     {
 
         //
