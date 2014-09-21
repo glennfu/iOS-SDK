@@ -32,7 +32,7 @@ Pod::Spec.new do |spec|
     "SinglySDK/SinglySDK/Resources"
   ]
   spec.resource = "SinglySDK/SinglySDK/Resources/SinglySDK.bundle"
-  def spec.pre_install(pod, target_definition)
+  def spec.prepare_command(pod, target_definition)
     Dir.chdir(pod.root) do
       `xcodebuild -project SinglySDK/SinglySDK.xcodeproj -target Resources CONFIGURATION_BUILD_DIR=SinglySDK/Resources`
     end
