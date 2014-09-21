@@ -1,7 +1,7 @@
 
 # Singly SDK ChangeLog
 
-## 1.3.0
+## 1.3.0 - September 23rd, 2013
 
 * Fixed an issue with native Twitter authorization on iOS 7.
 
